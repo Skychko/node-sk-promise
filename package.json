@@ -1,0 +1,23 @@
+{
+  "name": "node-sk-promise",
+  "version": "0.1.0",
+  "description": "Light implementation of JavaScript Promise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Skychko/node-sk-promise"
+  },
+  "keywords": [
+    "javascript",
+    "promises"
+  ],
+  "author": "Denys Skychko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Skychko/node-sk-promise/issues"
+  },
+  "homepage": "https://github.com/Skychko/node-sk-promise"
+}
