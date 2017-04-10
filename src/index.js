@@ -187,6 +187,7 @@ Pr.prototype['catch'] = function(fn){
         pr.state = PENDING;
         pr._fn = fn;
         this._catches_queue.push(pr);
+        this._thens_queue.push(pr);
         return pr;
     case RESOLVED:
         return this;
@@ -206,7 +207,9 @@ Pr.prototype['catch'] = function(fn){
 // wrapper for IE9
 Pr.prototype._catch = Pr.prototype['catch'];
 Pr.prototype.cancel = function(){
-    this._state = CANCELED;
+    if (this._state === PENDING)
+        this._state = CANCELED;
+    return this;
 };
 Pr.prototype.isCancelled = function(){
     return this._state === CANCELED;
