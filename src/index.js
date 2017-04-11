@@ -86,16 +86,15 @@ Pr.prototype._run = function(val){
 };
 Pr.prototype._run_catches = function(){
     for (var i = 0; i<this._catches_queue.length; ++i)
-    {
-        if (this._ctx)
-            this._catches_queue[i]._run(this._value);
-        else
-            this._catches_queue[i]._run(this._value);
-    }
+        this._catches_queue[i]._run(this._value);
+    for (var i = 0; i<this._thens_queue.length; ++i)
+        this._thens_queue[i]._run_catches(this._value);
 };
 Pr.prototype._run_thens = function(){
     for (var i = 0; i<this._thens_queue.length; ++i)
         this._thens_queue[i]._run(this._value);
+    for (var i = 0; i<this._catches_queue.length; ++i)
+        this._catches_queue[i]._run_thens(this._value);
 };
 Pr.prototype._finish = function(state, value){
     if (this._state !== PENDING)
@@ -187,7 +186,6 @@ Pr.prototype['catch'] = function(fn){
         pr.state = PENDING;
         pr._fn = fn;
         this._catches_queue.push(pr);
-        this._thens_queue.push(pr);
         return pr;
     case RESOLVED:
         return this;
