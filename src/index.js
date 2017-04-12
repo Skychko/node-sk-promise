@@ -191,12 +191,12 @@ Pr.prototype['catch'] = function(fn){
         return this;
     case REJECTED:
         try {
-            res = pr(this._value);
+            res = fn(this._value);
             if (Pr.is_promise(res))
                 return res;
             return Pr.get_finished_promise(RESOLVED, res);
         } catch(e){
-            return Pr.get_finished_promise(REJECTED, res);
+            return Pr.get_finished_promise(REJECTED, e);
         }
     case CANCELED:
         return this;
