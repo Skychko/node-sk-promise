@@ -84,13 +84,19 @@ Pr.prototype._run = function(val){
         this._run_catches();
     }
 };
-Pr.prototype._run_catches = function(){
+Pr.prototype._run_catches = function(val){
+    this._value = val || this._value;
+    if (this._state === PENDING)
+        this._state = REJECTED;
     for (var i = 0; i<this._catches_queue.length; ++i)
         this._catches_queue[i]._run(this._value);
     for (var i = 0; i<this._thens_queue.length; ++i)
         this._thens_queue[i]._run_catches(this._value);
 };
-Pr.prototype._run_thens = function(){
+Pr.prototype._run_thens = function(val){
+    this._value = val || this._value;
+    if (this._state === PENDING)
+        this._state = RESOLVED;
     for (var i = 0; i<this._thens_queue.length; ++i)
         this._thens_queue[i]._run(this._value);
     for (var i = 0; i<this._catches_queue.length; ++i)
